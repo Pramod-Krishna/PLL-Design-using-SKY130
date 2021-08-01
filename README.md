@@ -4,15 +4,15 @@
 
 # **_Table of Contents_**
 
-# **_Introduction to PLL_**
-# **_Block Diagram_** 
-# **_Phase Frequency Detector_**
-# **_Charge Pump_** 
-# **_Loop Filter_**
-# **_Voltage Controlled Oscillator_**
-# **_PLL Components Circuit Design_**
-# Acknowledgement
-# References
+## [Introduction to PLL](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#introduction-to-pll-1)
+## [Block Diagram](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#block-diagram-1)
+## [Phase Frequency Detector](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#phase-frequency-detector-1)
+## [Charge Pump](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#charge-pump-1)
+## [Loop Filter](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#loop-filter-1)
+## [Voltage Controlled Oscillator](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#voltage-controlled-oscillator-1)
+## [PLL Components Circuit Design](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#pll-components-circuit-design-1)
+## [Acknowledgement](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#acknowledgement-1)
+## [References](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#references-1)
 
 ***
 
@@ -29,39 +29,66 @@ The PFD takes care of comparision between output signal and reference signal. Ch
 # **_Phase Frequency Detector_**
 
 ![image](https://user-images.githubusercontent.com/54993262/127765336-d37312ba-7b73-4696-a774-ef9dd2a38a4b.png)
+
+
 By using an XOR gate, we can measure the phase difference. The width of the pulse can be a measure of phase difference. But XOR output would not change if the output was lagging, hence we cannot differentiate. 
 
 ![image](https://user-images.githubusercontent.com/54993262/127765493-f1f937e1-301d-4b2d-a5c1-46f7d0a40cd7.png)
+
+
 For leading, we can look at DOWN signal and can slow down the output signal. Similarly from UP signal the output can be sped up.
+
+
 ![image](https://user-images.githubusercontent.com/54993262/127765590-a23805fc-18b4-43e8-a3cc-13f1cf973bf6.png)
 
 For ref and output having different frequencies, it is as shown below:
 ![image](https://user-images.githubusercontent.com/54993262/127765665-8a9dba3f-b893-48bd-83df-fa6a848e93c7.png)
 ![image](https://user-images.githubusercontent.com/54993262/127765787-57a2aed0-8b67-41d1-ab0a-792067ae1e85.png)
 
-This can also be represented by a state machine:
+
+This can also be represented by a state machine
+
 ![image](https://user-images.githubusercontent.com/54993262/127765829-944ce2ec-543d-4f80-9b71-be7e0da8ff33.png)
 
+
 The above state machine is implemented by a FF.
+
 ![image](https://user-images.githubusercontent.com/54993262/127765925-5d4ff697-38a6-48dd-ab73-933480f5678f.png)
+
+
 These are negatively edged triggered FF. 2 FFs are needed as falling edge for 2 signals are to be detected. This is a popular PFD circuit, the only issue with this circuit is Dead Zone. Dead zone prevents us from improving the smallest difference in phase or freq that we can measure. The output here seems to be clipped as there is no time for it to raise 
 
+
 # **_Charge Pump_** 
+
+
 It converts the digital measure of phase/frequency into an analog control signal to control the oscillator. 
+
 ![image](https://user-images.githubusercontent.com/54993262/127766113-73c5e4e1-20db-4c42-ad1f-ea1367db6c83.png)
+
+
 This is a Current Steering circuit. It directs the current flow from VDD to output or output to GND. If UP signal is active current flows from VDD to output and charges the capacitor. Thereby increasing voltage at CP output. If Down signal is active output flows from output to GND, thus discharges the output. 
 
 If average Up signal active time is greater than down signal then it can be shown by the below graph. 
+
+
 ![image](https://user-images.githubusercontent.com/54993262/127766226-32284830-6edc-4e63-8a69-fea8c3bba826.png)
+
 Else
+
+
 ![image](https://user-images.githubusercontent.com/54993262/127766271-7a3160a0-fdf6-4f33-a825-fcb7026a24d7.png)
+
 
 The circuit can be represented by Mosfets 
 ![image](https://user-images.githubusercontent.com/54993262/127766619-b1c9bdcb-e4e3-40df-b53f-85c203ab682d.png)
+
 The disadvantage here is when both up and down transistors are off, there we can see a leakage current. Thus this current keeps charging the capacitor. 
 
 # **_Loop Filter_**
 ![image](https://user-images.githubusercontent.com/54993262/127766789-a8cbabfc-2515-4f84-be2f-49ff45ae1dfd.png)
+
+
 Adding a LPF not only smoothens the output but also stabilizes the PLL. Without LPF, PLL cannot lock and mimic the ref signal. We should set Cx to be a tenth of the capacitor. The loop filter bandwidth must be less than one tenth the highest output frequency. 
 
 # **_Voltage Controlled Oscillator_**
@@ -71,7 +98,9 @@ The most comman one is the Ring oscillator. It contains odd number of inverters 
 *** 
 
 **Lock Range** - The frequency range the PLL is able to follow input frequency variations once locked.
+
 **Capture Range** - The frequency range the PLL is able to lock in when starting from an unlocked condition.
+
 **Settling time** - The time within which the PLL is able to lock in from an unlocked condition. 
 
 # **_PLL Components Circuit Design_**
