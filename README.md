@@ -116,6 +116,18 @@ The most comman one is the Ring oscillator. It contains odd number of inverters 
 
 # **_PLL Components Circuit Design_**
 
+
+## _Lab Setup and using Tools_
+We mainly use Ngspice and Magic. Ngspice for transistor level simulation and Magic for layout design and parasitic extraction.
+
+Ngspic: _ngspice<circuit_file_name>_
+
+It plots the results based upon the simulation instruction given in the circuit file after simulating the given circuit file.
+
+Magic: _magic - T <Technology_file_from_PDK><the_layout_file_to_open>_
+
+It opens the layout file, where can view the layout and make modifications to it. Magic has many features, out of which we will be using _parasitic extraction_ and _GDS_ features.
+
 We can simulate the **Frequency Divider** using ngspice. The circuit diagram is: 
 ![FreqDiv_Ckt](https://user-images.githubusercontent.com/54993262/127768760-8cab0492-3c56-4f08-adc7-edef3cea7d28.JPG)
 
@@ -128,6 +140,7 @@ The _tran_ instruction tells the simulator to do a transient analysis by the giv
 ![FD2](https://user-images.githubusercontent.com/54993262/127768715-93a67fea-0028-45fb-802e-476db9e0f0da.JPG)
 
 The simlation results are as follows:
+
 ![Freq_Div_OP](https://user-images.githubusercontent.com/54993262/127768748-ea40943a-87af-4e0f-a332-ec6beb43c484.JPG)
 
 For **Charge Pump** it is as follows:
@@ -162,12 +175,63 @@ Output of PLL:
 ![PreLayOP](https://user-images.githubusercontent.com/54993262/127769862-2f167d97-6195-47dd-a862-c0894c6f0016.JPG)
 
 
-Here the red signal is the reference signal.
+_Here the red signal is the reference signal. Blue is Output Clock Divided by 8, Yellow is the Down Signal, Brown is Up Signal and Pink is Charge pump output._
 
 
 ![PreLayOP2](https://user-images.githubusercontent.com/54993262/127769981-7939daf2-1d01-4e48-96a7-0553f8785ae7.JPG)
 
 
+## _Troubleshooting Steps_
+* If output doesn't match or mimic the ref signal, should always try to debug individual circuits beore simulating the whole circuit. If signals are coming flat up or the simulation is crashing then check whether the connectivity is done properly or any issues like wrong net names or parameter value issues.
+
+If the signals are coming as expected but mimicing of signal is not happening then verify the following:
+
+*If the VCO is working within the required range or not.
+
+*Whether the PFD is able to detect small phase differences or not.
+
+*The response of charge pump. The speed of it. If there is too much fluctuations in charging or discharging, then capacitor sizing is the thing where we have to pay the attention to. Also, check if there is charge leakage. If the charge pump is charging when the input is zero, then there is charge leakage issue.
+
+*If nothing works out, then should adjust the loop filter accordingly.
+
+## _Magic Layout_
+In layout, different colour represents different components:
+
+_n-well - slash lines
+
+_metal1 layer - purple
+
+_local interconnect layer - blue
+
+_p-diffusion - plane orange colour
+
+_n-diffusion - plane green colour
+
+_polysilicon - plane red
+
+**To view the layout of PFD using magic** ``` magic -T sky130A.tech PFD.mag         ```
+
+![image](https://user-images.githubusercontent.com/54993262/127809855-14eda461-61df-400a-8674-c50c6c5122a0.png)
+
+For Charge pump:
+
+![image](https://user-images.githubusercontent.com/54993262/127809893-d32d6dcd-216a-4eb1-9e85-31ae1c0aae01.png)
+
+VCO:
+
+![image](https://user-images.githubusercontent.com/54993262/127809961-8287c74d-13cb-46a5-85f8-e53531627b80.png)
+
+
+Frequency Divider:
+
+![image](https://user-images.githubusercontent.com/54993262/127810026-d0829295-696e-424c-915e-948f2b18f63b.png)
+
+_PLL when viewed in magic is as follows:_
+
+![image](https://user-images.githubusercontent.com/54993262/127810137-f28ae502-0dab-45a0-9813-f26033e4c9e3.png)
+
+
+To connect two transistors, we use interconnect layer. To connect two metal layers, we use the contact/via.
 
 ***
 # Acknowledgement
