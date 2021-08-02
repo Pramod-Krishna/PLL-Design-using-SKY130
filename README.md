@@ -11,6 +11,9 @@
 ## [Loop Filter](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#loop-filter-1)
 ## [Voltage Controlled Oscillator](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#voltage-controlled-oscillator-1)
 ## [PLL Components Circuit Design](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#pll-components-circuit-design-1)
+## [Troubleshooting Steps]()
+## [Layout]()
+## [Tapeout]()
 ## [Acknowledgement](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#acknowledgement-1)
 ## [References](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#references-1)
 
@@ -65,7 +68,7 @@ These are negatively edged triggered FF. 2 FFs are needed as falling edge for 2 
 It converts the digital measure of phase/frequency into an analog control signal to control the oscillator. 
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/54993262/127766113-73c5e4e1-20db-4c42-ad1f-ea1367db6c83.png" width="600" height="400">
+<img src="https://user-images.githubusercontent.com/54993262/127766113-73c5e4e1-20db-4c42-ad1f-ea1367db6c83.png" width="300" height="400">
 </p>
 
 
@@ -93,7 +96,7 @@ The disadvantage here is when both up and down transistors are off, there we can
 # **_Loop Filter_**
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/54993262/127766789-a8cbabfc-2515-4f84-be2f-49ff45ae1dfd.png" width="600" height="400">
+<img src="https://user-images.githubusercontent.com/54993262/127766789-a8cbabfc-2515-4f84-be2f-49ff45ae1dfd.png" width="300" height="400">
 </p>
 
 
@@ -186,28 +189,28 @@ _Here the red signal is the reference signal. Blue is Output Clock Divided by 8,
 
 If the signals are coming as expected but mimicing of signal is not happening then verify the following:
 
-*If the VCO is working within the required range or not.
+* If the VCO is working within the required range or not.
 
-*Whether the PFD is able to detect small phase differences or not.
+* Whether the PFD is able to detect small phase differences or not.
 
-*The response of charge pump. The speed of it. If there is too much fluctuations in charging or discharging, then capacitor sizing is the thing where we have to pay the attention to. Also, check if there is charge leakage. If the charge pump is charging when the input is zero, then there is charge leakage issue.
+* The response of charge pump. The speed of it. If there is too much fluctuations in charging or discharging, then capacitor sizing is the thing where we have to pay the attention to. Also, check if there is charge leakage. If the charge pump is charging when the input is zero, then there is charge leakage issue.
 
-*If nothing works out, then should adjust the loop filter accordingly.
+* If nothing works out, then should adjust the loop filter accordingly.
 
 ## _Magic Layout_
 In layout, different colour represents different components:
 
-_n-well - slash lines
+_n-well - slash lines_
 
-_metal1 layer - purple
+_metal1 layer - purple_
 
-_local interconnect layer - blue
+_local interconnect layer - blue_
 
-_p-diffusion - plane orange colour
+_p-diffusion - orange colour_
 
-_n-diffusion - plane green colour
+_n-diffusion - green colour_
 
-_polysilicon - plane red
+_polysilicon - red_
 
 **To view the layout of PFD using magic** ``` magic -T sky130A.tech PFD.mag         ```
 
@@ -231,7 +234,15 @@ _PLL when viewed in magic is as follows:_
 ![image](https://user-images.githubusercontent.com/54993262/127810137-f28ae502-0dab-45a0-9813-f26033e4c9e3.png)
 
 
-To connect two transistors, we use interconnect layer. To connect two metal layers, we use the contact/via.
+## Tapeout
+Tapeout is the final result of the design process for integrated circuits or printed circuit boards before they are sent for manufacturing. IO ports connect the silicon wafer to the outside world. We would also need peripherals such as UART or I2C. Memory and Testing mechanisms too are required. 
+
+![image](https://user-images.githubusercontent.com/54993262/127813313-9ed5bc53-663f-45d6-87b9-02c30c317701.png)
+
+
+![image](https://user-images.githubusercontent.com/54993262/127813741-20f6b9a3-8472-4df8-8963-f3008ba5ea8b.png)
+
+We can zoom in to see the pins. Thus our PLL layout can be placed on this.
 
 ***
 # Acknowledgement
