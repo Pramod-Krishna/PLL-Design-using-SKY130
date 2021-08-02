@@ -23,12 +23,12 @@ Voltage Controlled Oscillator and Quartz crystals are two ways where we can gene
 
 # **_Block Diagram_** 
 
-![image](https://user-images.githubusercontent.com/54993262/127764082-3fc24de2-4cfb-45b3-9e3f-886b2fa9f6f1.png)
+![image](https://user-images.githubusercontent.com/54993262/127806194-cdc60451-60ac-483b-a73b-08bcf68c69be.png)
 The PFD takes care of comparision between output signal and reference signal. Charge Pump converts digital waveform to analog waveform. The filter smoothens the CP output signal. The FD is the component which converts the whole system to a multiplier. Such a PLL is called a Clock Multiplier PLL as they are used in clock circuits to get different frequencies which are multiples of reference clock frequencies.  
 
 # **_Phase Frequency Detector_**
 
-![image](https://user-images.githubusercontent.com/54993262/127765336-d37312ba-7b73-4696-a774-ef9dd2a38a4b.png)
+![image](https://user-images.githubusercontent.com/54993262/127806480-584446af-38e1-4f62-b43c-3b47b4ef52c8.png)
 
 
 By using an XOR gate, we can measure the phase difference. The width of the pulse can be a measure of phase difference. But XOR output would not change if the output was lagging, hence we cannot differentiate. 
@@ -48,7 +48,7 @@ For ref and output having different frequencies, it is as shown below:
 
 This can also be represented by a state machine
 
-![image](https://user-images.githubusercontent.com/54993262/127765829-944ce2ec-543d-4f80-9b71-be7e0da8ff33.png)
+![image](https://user-images.githubusercontent.com/54993262/127806585-87da6e18-76d7-466c-8c01-9364ecdce774.png)
 
 
 The above state machine is implemented by a FF.
@@ -64,7 +64,10 @@ These are negatively edged triggered FF. 2 FFs are needed as falling edge for 2 
 
 It converts the digital measure of phase/frequency into an analog control signal to control the oscillator. 
 
-![image](https://user-images.githubusercontent.com/54993262/127766113-73c5e4e1-20db-4c42-ad1f-ea1367db6c83.png)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/54993262/127766113-73c5e4e1-20db-4c42-ad1f-ea1367db6c83.png" width="600" height="400">
+</p>
+
 
 
 This is a Current Steering circuit. It directs the current flow from VDD to output or output to GND. If UP signal is active current flows from VDD to output and charges the capacitor. Thereby increasing voltage at CP output. If Down signal is active output flows from output to GND, thus discharges the output. 
@@ -80,19 +83,27 @@ Else
 ![image](https://user-images.githubusercontent.com/54993262/127766271-7a3160a0-fdf6-4f33-a825-fcb7026a24d7.png)
 
 
-The circuit can be represented by Mosfets 
+The circuit can be represented by Mosfets as shown below. 
+
+
 ![image](https://user-images.githubusercontent.com/54993262/127766619-b1c9bdcb-e4e3-40df-b53f-85c203ab682d.png)
 
 The disadvantage here is when both up and down transistors are off, there we can see a leakage current. Thus this current keeps charging the capacitor. 
 
 # **_Loop Filter_**
-![image](https://user-images.githubusercontent.com/54993262/127766789-a8cbabfc-2515-4f84-be2f-49ff45ae1dfd.png)
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/54993262/127766789-a8cbabfc-2515-4f84-be2f-49ff45ae1dfd.png" width="600" height="400">
+</p>
+
 
 
 Adding a LPF not only smoothens the output but also stabilizes the PLL. Without LPF, PLL cannot lock and mimic the ref signal. We should set Cx to be a tenth of the capacitor. The loop filter bandwidth must be less than one tenth the highest output frequency. 
 
 # **_Voltage Controlled Oscillator_**
 The most comman one is the Ring oscillator. It contains odd number of inverters and flips the output. Since the flip is half of a period, the output will have a period twice the total delay of the series of inverters. We can achive control over the output by using current starving mechanism. 
+
+
 ![image](https://user-images.githubusercontent.com/54993262/127766948-2060fe31-8a03-4401-9f87-ae03f801f497.png)
 
 *** 
@@ -149,7 +160,11 @@ Now combining all circuits and thus implementing a PLL:
 
 Output of PLL:
 ![PreLayOP](https://user-images.githubusercontent.com/54993262/127769862-2f167d97-6195-47dd-a862-c0894c6f0016.JPG)
+
+
 Here the red signal is the reference signal.
+
+
 ![PreLayOP2](https://user-images.githubusercontent.com/54993262/127769981-7939daf2-1d01-4e48-96a7-0553f8785ae7.JPG)
 
 
