@@ -11,9 +11,9 @@
 ## [Loop Filter](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#loop-filter-1)
 ## [Voltage Controlled Oscillator](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#voltage-controlled-oscillator-1)
 ## [PLL Components Circuit Design](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#pll-components-circuit-design-1)
-## [Troubleshooting Steps]()
-## [Layout]()
-## [Tapeout]()
+## [Troubleshooting Steps](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#troubleshooting-steps-1)
+## [Layout](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#magic-layout)
+## [Tapeout](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#tapeout-1)
 ## [Acknowledgement](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#acknowledgement-1)
 ## [References](https://github.com/Pramod-Krishna/PLL-Design-using-SKY130/blob/main/README.md#references-1)
 
